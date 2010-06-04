@@ -4,7 +4,7 @@ from base import BaseBackend
 try:
 	from suds.client import Client
 except ImportError:
-	pass
+	not_available = True
 
 # Default settings
 SETTINGS = {

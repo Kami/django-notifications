@@ -5,8 +5,8 @@ from django.conf import settings
 
 BACKEND_CLASSES = {
 	'email': 'django_notifications.backends.email.EmailBackend',
-#	'xmpp': 'django_notifications.backends.xmpp.XMPPBackend',
-#	'sms_mobitel': 'django_notifications.backends.sms_mobitel.SMSMobitelBackend',
+	'xmpp': 'django_notifications.backends.xmpp.XMPPBackend',
+	'sms_mobitel': 'django_notifications.backends.sms_mobitel.SMSMobitelBackend',
 }
 
 def get_available_backends(configured_only = False):
@@ -18,12 +18,20 @@ def get_available_backends(configured_only = False):
 	"""
 	available_backends = []
 	for key in BACKEND_CLASSES.keys():
+		module_name = get_module_and_class_name(BACKEND_CLASSES[key])[0]
 		class_instance = get_class_instance_by_key(key)
+		module = sys.modules[module_name]
+		
+		try:
+			not_available = getattr(module, 'not_available')
+		except AttributeError:
+			not_available = None
 		
 		is_configured = getattr(class_instance, 'is_configured', False)()
 		meta = getattr(class_instance, 'meta', None)
 		
-		if not meta or (configured_only and not is_configured):
+		if not meta or (configured_only and not is_configured) \
+					or not_available:
 			continue
 			
 		name = meta['NAME']

@@ -6,7 +6,7 @@ import time
 try:
 	from ..xmpp import *
 except ImportError:
-	pass
+	not_available = True
 
 # Default settings
 SETTINGS = {
