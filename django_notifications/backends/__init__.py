@@ -31,7 +31,7 @@ def get_available_backends(configured_only = False):
 		meta = getattr(class_instance, 'meta', None)
 		
 		if not meta or (configured_only and not is_configured) \
-					or not_available:
+					or (configured_only and not_available):
 			continue
 			
 		name = meta['NAME']
