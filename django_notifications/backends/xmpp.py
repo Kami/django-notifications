@@ -8,6 +8,7 @@ try:
 except ImportError:
 	not_available = True
 
+
 # Default settings
 SETTINGS = {
 	'meta': {
