@@ -41,9 +41,14 @@ class SubscriptionAdmin(admin.ModelAdmin):
 		return obj.subscriptionmap_set.filter(active = True).count()
 	notification_count_active.short_description = 'Notification count (active)'
 
+class SubscriptionMapAdmin(admin.ModelAdmin):
+	list_display = ('subscription', 'message', 'type', 
+					'recipient', 'active')
+	search_fields = ('subscription__label',)
 
 class MessageAdmin(admin.ModelAdmin):
 	model = Message
 	
 admin.site.register(Subscription, SubscriptionAdmin)
+admin.site.register(SubscriptionMap, SubscriptionMapAdmin)
 admin.site.register(Message, MessageAdmin)
