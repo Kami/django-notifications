@@ -42,7 +42,7 @@ class CheckSubscriptionsTask(Task):
 				continue
 			
 			type = subscription.type
-			subscriber = subscription.data
+			subscriber = subscription.recipient
 			message = subscription.message.content
 			template = Template(message)
 			

@@ -87,7 +87,7 @@ class SubscriptionMap(models.Model):
 	subscription = models.ForeignKey(Subscription)
 	message = models.ForeignKey(Message)
 	type = models.CharField(max_length = 50, choices = NOTIFICATION_TYPES)
-	data = models.CharField(max_length = 250) # Email / XMPP address / Mobile phone number
+	recipient = models.CharField(max_length = 250) # Email / XMPP address / Mobile phone number
 	active = models.BooleanField(default = True)
 	
 	class Meta:
