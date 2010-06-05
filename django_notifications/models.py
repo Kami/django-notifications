@@ -95,7 +95,8 @@ class SubscriptionMap(models.Model):
 		verbose_name_plural = 'Notifications'
 		
 	def __unicode__(self):
-		return '%s - %s (%s)' % (self.subscription, self.type, self.active)
+		return '%s - %s (%s)' % (self.subscription, self.type, \
+								'enabled' if self.active else 'disabled')
 
 # Signal callbacks
 def post_save_callback(sender, **kwargs):
