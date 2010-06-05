@@ -33,7 +33,7 @@ class Command(BaseCommand):
 	def handle(self, *args, **kwargs):		
 		if len(args) == 0:
 			raise CommandError('You need to specify a subcommand: %s' % \
-							(', ' . join(valid_commands)))
+							(', ' . join(VALID_COMMANDS)))
 		else:
 			sub_command = args[0]
 			
