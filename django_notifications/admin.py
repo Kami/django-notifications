@@ -16,7 +16,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
 					'notification_count_active')
 	list_filter = ('model_content_type',)
 	date_hierarchy = 'date_subscribed'
-	search_fields = ('subscriptionmap__message__label',)
+	search_fields = ('label', 'subscriptionmap__message__label',)
 	
 	inlines = [ SubscriptionMapInline ]
 	
