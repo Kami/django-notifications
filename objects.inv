@@ -1,0 +1,4 @@
+# Sphinx inventory version 1
+# Project: Django notifications
+# Version: 0.1
+django_notifications mod index.html

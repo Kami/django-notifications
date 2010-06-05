@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; Django notifications v0.1.dev documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.1.dev',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="Django notifications v0.1.dev documentation" href="index.html" />
+    <link rel="next" title="Dependencies" href="dependencies.html" />
+    <link rel="prev" title="django_notifications – Django application which allows you to make subscriptions for different model events" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="dependencies.html" title="Dependencies"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="django_notifications – Django application which allows you to make subscriptions for different model events"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Django notifications v0.1.dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>django_notifications is an application which allows you to make subscriptions for different model events (create, edit and delete) and send notification(s) when the event you have created subscription for has occurred.</p>
+<p>You can subscribe to an event for all the model objects (current and new ones which will be created) or you can choose to only subscribe to an event for a specific model object.</p>
+<p>For example, lets say you are running a social-network website and your application contains a module named <tt class="docutils literal"><span class="pre">Profile</span></tt> which contains the following fields:</p>
+<ul class="simple">
+<li>user</li>
+<li>full_name</li>
+<li>location</li>
+<li>bio</li>
+<li>date_created</li>
+<li>date_updated</li>
+</ul>
+<p>You could then create a subscription on the model <tt class="docutils literal"><span class="pre">Profile</span></tt> for action <tt class="docutils literal"><span class="pre">create</span></tt>.</p>
+<p>In this case, the event would be triggered (and notification dispatched) every time a new Profile object is created.</p>
+<p>On the other hand, lets say you are only interested when an object with ID 500 is updated / edited.</p>
+<p>You can create a subscription on the model <tt class="docutils literal"><span class="pre">Profile</span></tt> and the <tt class="docutils literal"><span class="pre">model</span> <span class="pre">object</span> <span class="pre">ID</span></tt> 500 for an action <tt class="docutils literal"><span class="pre">edit</span></tt>.</p>
+<p>Now, the event would only be triggered when a object with ID 500 is edited.</p>
+<p><a href="#id1"><span class="problematic" id="id2">*</span></a>Note: If you subscribe to a delete event for a specific model object, the subscription is automatically disabled after the event has been triggered and notification dispatched.</p>
+<p>The reason is that is makes no sense staying subscribed to this event, since it won&#8217;t happen anymore, because the object has been deleted.</p>
+<div class="section" id="available-notification-backends">
+<h2>Available notification backends<a class="headerlink" href="#available-notification-backends" title="Permalink to this headline">¶</a></h2>
+<p>Currently this module supports the following notification backends / protocols:</p>
+<ul class="simple">
+<li>Email - uses Django e-mail wrapper for sending e-mail</li>
+<li>XMPP - uses XMPP protocol for sending notifications (Google Talk, etc.)</li>
+<li>SMS - uses <cite>Mobitel.si</cite> service to send SMS messages (only available to Mobitel.si subscribers in Slovenia)</li>
+<li>Postmark Email - uses <a class="reference external" href="http://postmarkapp.com">http://postmarkapp.com</a> REST service to send email</li>
+</ul>
+<p>For more information, visit the <a class="reference external" href="available_notification_backends.html"><em>Available notification backends</em></a> page.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Introduction</a><ul>
+<li><a class="reference external" href="#available-notification-backends">Available notification backends</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">django_notifications</span></tt> &#8211; Django application which allows you to make subscriptions for different model events</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="dependencies.html"
+                                  title="next chapter">Dependencies</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="sources/introduction.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dependencies.html" title="Dependencies"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="django_notifications – Django application which allows you to make subscriptions for different model events"
+             >previous</a> |</li>
+        <li><a href="index.html">Django notifications v0.1.dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Tomaž Muraus.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+    </div>
+  </body>
+</html>

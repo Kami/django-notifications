@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Available notification backends &mdash; Django notifications v0.1.dev documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.1.dev',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="Django notifications v0.1.dev documentation" href="index.html" />
+    <link rel="prev" title="Concepts and models" href="concepts_and_models.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="concepts_and_models.html" title="Concepts and models"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Django notifications v0.1.dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="available-notification-backends">
+<h1>Available notification backends<a class="headerlink" href="#available-notification-backends" title="Permalink to this headline">¶</a></h1>
+<p>Here is the list of the available notification backends.</p>
+<p>You configure your backend(s) by putting the appropriate settings in your project settings file (this will most likely be <tt class="docutils literal"><span class="pre">settings.py</span></tt>).</p>
+<div class="section" id="email">
+<h2>email<a class="headerlink" href="#email" title="Permalink to this headline">¶</a></h2>
+<p>This backend uses Django e-mail wrapper for sending e-mail notifications.</p>
+<p><strong>Dependencies</strong>:</p>
+<ul class="simple">
+<li>None</li>
+</ul>
+<p><strong>Settings</strong>:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">SUBJECT</span></tt> - the subject of your email</li>
+<li><tt class="docutils literal"><span class="pre">SENDER_EMAIL</span></tt> - email address of the sender</li>
+</ul>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NOTIFICATIONS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;email&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&#39;SUBJECT&#39;</span><span class="p">:</span> <span class="s">&#39;Your subject&#39;</span><span class="p">,</span>
+                <span class="s">&#39;SENDER_EMAIL&#39;</span><span class="p">:</span> <span class="s">&#39;name@domain.com&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xmpp">
+<h2>xmpp<a class="headerlink" href="#xmpp" title="Permalink to this headline">¶</a></h2>
+<p>This backend uses XMPP protocol for sending the notifications.</p>
+<p><strong>Dependencies</strong>:</p>
+<ul class="simple">
+<li>xmpppy library (<a class="reference external" href="http://xmpppy.sourceforge.net">http://xmpppy.sourceforge.net</a>)</li>
+</ul>
+<p><strong>Settings</strong>:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">JID</span></tt> - your Jabber ID (username)</li>
+<li><tt class="docutils literal"><span class="pre">PASSWORD</span></tt> - your password</li>
+<li><tt class="docutils literal"><span class="pre">SERVER</span></tt> - XMPP server (default = talk.google.com)</li>
+<li><tt class="docutils literal"><span class="pre">PORT</span></tt> - server port (default = 5222)</li>
+</ul>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NOTIFICATIONS</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&#39;xmpp&#39;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&#39;JID&#39;</span><span class="p">:</span> <span class="s">&#39;me@mydomain.com&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;HsdeoUns18AT18E&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that we didn&#8217;t specify the <tt class="docutils literal"><span class="pre">SERVER</span></tt> and the <tt class="docutils literal"><span class="pre">PORT</span></tt> setting, meaning that the default values will be used.</p>
+</div>
+<div class="section" id="sms-mobitel">
+<h2>sms_mobitel<a class="headerlink" href="#sms-mobitel" title="Permalink to this headline">¶</a></h2>
+<p><strong>Dependencies</strong>:</p>
+<ul class="simple">
+<li>SUDS library (<a class="reference external" href="https://fedorahosted.org/suds/">https://fedorahosted.org/suds/</a>)</li>
+</ul>
+<p>This backend uses <cite>Mobitel.si</cite> service to send SMS messages (only available to Mobitel.si subscribers in Slovenia)</p>
+<p><strong>Settings</strong>:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">USERNAME</span></tt> - your phone number</li>
+<li><tt class="docutils literal"><span class="pre">PASSWORD</span></tt> - your password</li>
+</ul>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NOTIFICATIONS</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&#39;sms_mobitel&#39;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&#39;USERNAME&#39;</span><span class="p">:</span> <span class="s">&#39;031123456&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;somepassword12&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="postmark">
+<h2>postmark<a class="headerlink" href="#postmark" title="Permalink to this headline">¶</a></h2>
+<p>This backend uses <a class="reference external" href="http://postmarkapp.com">http://postmarkapp.com</a> REST service to send email.</p>
+<p><strong>Dependencies</strong>:</p>
+<ul class="simple">
+<li>PostmarkApp library (<a class="reference external" href="http://github.com/themartorana/python-postmark">http://github.com/themartorana/python-postmark</a>)</li>
+</ul>
+<p><strong>Settings</strong>:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">API_KEY</span></tt> - your PostmarkApp API key</li>
+<li><tt class="docutils literal"><span class="pre">SUBJECT</span></tt> - the subject of your email</li>
+<li><tt class="docutils literal"><span class="pre">SENDER_EMAIL</span></tt> - email address of the sender</li>
+</ul>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NOTIFICATIONS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;postmark&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&#39;API_KEY&#39;</span><span class="p">:</span> <span class="s">&#39;f8469hg8as1-5g87sdf9sde03-41ae86&#39;</span><span class="p">,</span>
+                <span class="s">&#39;SUBJECT&#39;</span><span class="p">:</span> <span class="s">&#39;Your subject&#39;</span><span class="p">,</span>
+                <span class="s">&#39;SENDER_EMAIL&#39;</span><span class="p">:</span> <span class="s">&#39;name@domain.com&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Available notification backends</a><ul>
+<li><a class="reference external" href="#email">email</a></li>
+<li><a class="reference external" href="#xmpp">xmpp</a></li>
+<li><a class="reference external" href="#sms-mobitel">sms_mobitel</a></li>
+<li><a class="reference external" href="#postmark">postmark</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="concepts_and_models.html"
+                                  title="previous chapter">Concepts and models</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="sources/available_notification_backends.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="concepts_and_models.html" title="Concepts and models"
+             >previous</a> |</li>
+        <li><a href="index.html">Django notifications v0.1.dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Tomaž Muraus.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+    </div>
+  </body>
+</html>
