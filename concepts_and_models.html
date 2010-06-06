@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Concepts and models &mdash; Django notifications v0.1.dev documentation</title>
+    <title>Concepts and models &mdash; Django notifications v0.2.dev documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '#',
-        VERSION:     '0.1.dev',
+        VERSION:     '0.2.dev',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,7 +19,7 @@
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="Django notifications v0.1.dev documentation" href="index.html" />
+    <link rel="top" title="Django notifications v0.2.dev documentation" href="index.html" />
     <link rel="next" title="Available notification backends" href="available_notification_backends.html" />
     <link rel="prev" title="Dependencies" href="dependencies.html" /> 
   </head>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="dependencies.html" title="Dependencies"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Django notifications v0.1.dev documentation</a> &raquo;</li> 
+        <li><a href="index.html">Django notifications v0.2.dev documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -59,14 +59,15 @@
 <h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="subscriptions">
 <h3>Subscriptions<a class="headerlink" href="#subscriptions" title="Permalink to this headline">¶</a></h3>
-<p>This is the main model which creates a mapping between model event and notifications.</p>
+<p>This is the main model which creates a mapping between a model event and one or more notifications.</p>
 <p><strong>Fields:</strong></p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">Label</span></tt> - short label for your subscription</li>
 <li><tt class="docutils literal"><span class="pre">User</span></tt> - user which this subscription is connected to (can be empty)</li>
-<li><tt class="docutils literal"><span class="pre">Model</span></tt> - the model which will trigger the event</li>
-<li><tt class="docutils literal"><span class="pre">Model</span> <span class="pre">object</span> <span class="pre">id</span></tt> - the specific model object which you want to create subscription for (in case you leave this empty, you subscribe to event for all the model objects)</li>
-<li><tt class="docutils literal"><span class="pre">Action</span></tt> - model action which will trigger the event (can be create, edit or delete)</li>
+<li><tt class="docutils literal"><span class="pre">Model</span></tt> - the model which triggers the event</li>
+<li><tt class="docutils literal"><span class="pre">Model</span> <span class="pre">object</span> <span class="pre">id</span></tt> - ID of the model object which you want to create subscription for (in case you leave this field empty, you subscribe to event for all the model objects)</li>
+<li><tt class="docutils literal"><span class="pre">Model</span> <span class="pre">match</span> <span class="pre">filter</span></tt> - a special match filter (for more information, see <a class="reference internal" href="#concepts-and-models-match-filters"><em>Model match filters</em></a>)</li>
+<li><tt class="docutils literal"><span class="pre">Action</span></tt> - model action which triggers the event (can be <tt class="docutils literal"><span class="pre">create</span></tt>, <tt class="docutils literal"><span class="pre">edit</span></tt> or <tt class="docutils literal"><span class="pre">delete</span></tt>)</li>
 <li><tt class="docutils literal"><span class="pre">Active</span></tt> - you can optionally (temporary) de-active the subscription</li>
 </ul>
 </div>
@@ -75,27 +76,42 @@
 <p>Subscription would be useless without a notification so you should create at least one (and possibly more) notifications for your subscription.</p>
 <p><strong>Fields:</strong></p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">Messages</span></tt> - refers to the message template which is dispatched using the selected notification backend</li>
-<li><tt class="docutils literal"><span class="pre">Type</span></tt> - notification type, for example: Email, Jabber, SMS, .... (this field will only display those backends which have been configured properly)</li>
-<li><tt class="docutils literal"><span class="pre">Recipient</span></tt> - the recipient of the notification (e.g. email address when using the Email backends, mobile phone number when using the SMS backend, Jabber ID when using the XMPP backend and so on)</li>
-<li><tt class="docutils literal"><span class="pre">Active</span></tt> - you can optionally (temporary) de-active the subscription</li>
+<li><tt class="docutils literal"><span class="pre">Message</span></tt> - refers to the message template which is dispatched using the selected notification backend</li>
+<li><tt class="docutils literal"><span class="pre">Type</span></tt> - notification type, for example: Email, Jabber, SMS, .... (this field will only display backends which have been configured properly)</li>
+<li><tt class="docutils literal"><span class="pre">Recipient</span></tt> - the recipient of the notification (e.g. email address when using the Email backend, mobile phone number when using the SMS backend, Jabber ID when using the XMPP backend and so on)</li>
+<li><tt class="docutils literal"><span class="pre">Active</span></tt> - you can optionally (temporary) de-active the notification</li>
 </ul>
 </div>
 <div class="section" id="messages">
 <h3>Messages<a class="headerlink" href="#messages" title="Permalink to this headline">¶</a></h3>
-<p>That is the message template which is dispatched using the selected notification backend.</p>
+<p>A message template which is dispatched using the selected notification backend.</p>
 <p><strong>Fields:</strong></p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">label</span></tt> - short label for your message</li>
-<li><tt class="docutils literal"><span class="pre">content</span></tt> - your message content</li>
+<li><tt class="docutils literal"><span class="pre">label</span></tt> - short label for your message template</li>
+<li><tt class="docutils literal"><span class="pre">content</span></tt> - the content of your message</li>
 </ul>
 <p>When rendered, each message template is automatically provided with the name of the action and the model which has triggered the event, and also all the model instance field values.</p>
-<p>This allows you to use the Django template tags in the content field of the message templates.</p>
-<p>For example, one of your message templates could then look like this:</p>
+<p>This allows you to use the <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/templates/builtins/">Django template tags and filters</a> in the content field of the message templates.</p>
+<p>For example, one of your message templates could look like this:</p>
 <div class="highlight-python"><pre>Profile of the user {{ user.username }} has been updated on {{ date_updated|date:"d.m.Y" }} (model {{ model }}, action {{ action }})</pre>
 </div>
 <p>In this case, the model which has triggered this event would need to have at least two fields - <tt class="docutils literal"><span class="pre">user</span></tt> and <tt class="docutils literal"><span class="pre">date_updated</span></tt>.</p>
 </div>
+</div>
+<div class="section" id="model-match-filters">
+<span id="concepts-and-models-match-filters"></span><h2>Model match filters<a class="headerlink" href="#model-match-filters" title="Permalink to this headline">¶</a></h2>
+<p>Matching an event based on the model instance field value(s) is currently very limited and simple, but nonetheless you can still use basic <tt class="docutils literal"><span class="pre">startswith</span></tt>, <tt class="docutils literal"><span class="pre">endswith</span></tt> and <tt class="docutils literal"><span class="pre">contains</span></tt> filters.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">startswith</span></tt> filter: &lt;field name&gt;=&lt;field_value&gt;* (e.g. <tt class="docutils literal"><span class="pre">title=Just</span> <span class="pre">released*</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">endswith</span></tt> filter: &lt;field name&gt;=*&lt;field value&gt; (e.g. <tt class="docutils literal"><span class="pre">author=*Smith</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">contains</span></tt> filter: &lt;field name&gt;=*&lt;field value&gt;* (e.g. <tt class="docutils literal"><span class="pre">description=*Saturday</span> <span class="pre">morning*</span></tt>)</li>
+</ul>
+<p>You can combine multiple filters using a comma (<tt class="docutils literal"><span class="pre">,</span></tt>) - currently only <tt class="docutils literal"><span class="pre">AND</span></tt> filters are supported.</p>
+<p>For example:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">title=*Apache*,enabled=True</span></tt> - this would match a defined model instance which <tt class="docutils literal"><span class="pre">title</span></tt> field contains a string <tt class="docutils literal"><span class="pre">Apache</span></tt> <strong>AND</strong> the <tt class="docutils literal"><span class="pre">enabled</span></tt> field has a value of <tt class="xref docutils literal"><span class="pre">True</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">status=sent,author=Tomaz,content=*committed*</span></tt> - this would match a defined model instance which <tt class="docutils literal"><span class="pre">status</span></tt> field has a value of <tt class="docutils literal"><span class="pre">sent</span></tt> <strong>AND</strong> the <tt class="docutils literal"><span class="pre">author</span></tt> field has a value of <tt class="docutils literal"><span class="pre">Tomaz</span></tt> <strong>AND</strong>  the <tt class="docutils literal"><span class="pre">content</span></tt> field contains a string <tt class="docutils literal"><span class="pre">committed</span></tt>.</li>
+</ul>
 </div>
 </div>
 
@@ -115,6 +131,7 @@
 <li><a class="reference external" href="#messages">Messages</a></li>
 </ul>
 </li>
+<li><a class="reference external" href="#model-match-filters">Model match filters</a></li>
 </ul>
 </li>
 </ul>
@@ -162,7 +179,7 @@
         <li class="right" >
           <a href="dependencies.html" title="Dependencies"
              >previous</a> |</li>
-        <li><a href="index.html">Django notifications v0.1.dev documentation</a> &raquo;</li> 
+        <li><a href="index.html">Django notifications v0.2.dev documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

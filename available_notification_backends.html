@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Available notification backends &mdash; Django notifications v0.1.dev documentation</title>
+    <title>Available notification backends &mdash; Django notifications v0.2.dev documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '#',
-        VERSION:     '0.1.dev',
+        VERSION:     '0.2.dev',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,7 +19,8 @@
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="Django notifications v0.1.dev documentation" href="index.html" />
+    <link rel="top" title="Django notifications v0.2.dev documentation" href="index.html" />
+    <link rel="next" title="Frequently asked questions" href="faq.html" />
     <link rel="prev" title="Concepts and models" href="concepts_and_models.html" /> 
   </head>
   <body>
@@ -33,9 +34,12 @@
           <a href="modindex.html" title="Global Module Index"
              accesskey="M">modules</a> |</li>
         <li class="right" >
+          <a href="faq.html" title="Frequently asked questions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
           <a href="concepts_and_models.html" title="Concepts and models"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Django notifications v0.1.dev documentation</a> &raquo;</li> 
+        <li><a href="index.html">Django notifications v0.2.dev documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -141,6 +145,31 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="twitter">
+<h2>twitter<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
+<p>This backends sends notifications to <a class="reference external" href="http://twitter.com/">Twitter</a>.</p>
+<p>When you set a recipient in the admin panel, you can specify a Twitter account username (<tt class="docutils literal"><span class="pre">&#64;Username</span></tt>) and the backend will send this user a <a class="reference external" href="http://help.twitter.com/forums/10711/entries/14606">direct message</a>.</p>
+<p>If anything else not starting with an at sign is specified, the <tt class="docutils literal"><span class="pre">recipient</span></tt> field is ignored and a normal <a class="reference external" href="http://help.twitter.com/entries/15367-how-to-post-a-twitter-update-or-tweet">status update</a> is posted.</p>
+<p><strong>Dependencies</strong>:</p>
+<ul class="simple">
+<li>python-twitter library (<a class="reference external" href="http://code.google.com/p/python-twitter/">http://code.google.com/p/python-twitter/</a>)</li>
+</ul>
+<p><strong>Settings</strong>:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">USERNAME</span></tt> - your Twitter account username</li>
+<li><tt class="docutils literal"><span class="pre">PASSWORD</span></tt> - your Twitter account password</li>
+</ul>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NOTIFICATIONS</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&#39;twitter&#39;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&#39;USERNAME&#39;</span><span class="p">:</span> <span class="s">&#39;Tweetie&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;somepassword1298&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><em>Note: If you want to send a direct message, the user which you want to send the message to must follow you and vice-versa.</em></p>
+</div>
 </div>
 
 
@@ -156,6 +185,7 @@
 <li><a class="reference external" href="#xmpp">xmpp</a></li>
 <li><a class="reference external" href="#sms-mobitel">sms_mobitel</a></li>
 <li><a class="reference external" href="#postmark">postmark</a></li>
+<li><a class="reference external" href="#twitter">twitter</a></li>
 </ul>
 </li>
 </ul>
@@ -163,6 +193,9 @@
             <h4>Previous topic</h4>
             <p class="topless"><a href="concepts_and_models.html"
                                   title="previous chapter">Concepts and models</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="faq.html"
+                                  title="next chapter">Frequently asked questions</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="sources/available_notification_backends.txt"
@@ -195,9 +228,12 @@
           <a href="modindex.html" title="Global Module Index"
              >modules</a> |</li>
         <li class="right" >
+          <a href="faq.html" title="Frequently asked questions"
+             >next</a> |</li>
+        <li class="right" >
           <a href="concepts_and_models.html" title="Concepts and models"
              >previous</a> |</li>
-        <li><a href="index.html">Django notifications v0.1.dev documentation</a> &raquo;</li> 
+        <li><a href="index.html">Django notifications v0.2.dev documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Dependencies &mdash; Django notifications v0.2.dev documentation</title>
+    <title>Frequently asked questions &mdash; Django notifications v0.2.dev documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -20,8 +20,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="Django notifications v0.2.dev documentation" href="index.html" />
-    <link rel="next" title="Concepts and models" href="concepts_and_models.html" />
-    <link rel="prev" title="Introduction" href="introduction.html" /> 
+    <link rel="prev" title="Available notification backends" href="available_notification_backends.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,10 +33,7 @@
           <a href="modindex.html" title="Global Module Index"
              accesskey="M">modules</a> |</li>
         <li class="right" >
-          <a href="concepts_and_models.html" title="Concepts and models"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="introduction.html" title="Introduction"
+          <a href="available_notification_backends.html" title="Available notification backends"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Django notifications v0.2.dev documentation</a> &raquo;</li> 
       </ul>
@@ -48,15 +44,16 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="dependencies">
-<h1>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h1>
-<p>Here is a list of the dependencies this module requires to run.</p>
-<ul class="simple">
-<li>Django 1.2</li>
-<li><a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/contenttypes/#installing-the-contenttypes-framework">Django Content type framework</a></li>
-<li><a class="reference external" href="http://ask.github.com/celery/getting-started/introduction.html">celery</a> - task queue/job queue based on distributed message passing</li>
-</ul>
-<p><em>Note: The content types framework is already included and enabled by default in all the Django projects created using the startproject management comment, so you most likely won&#8217;t need to change anything.</em></p>
+  <div class="section" id="frequently-asked-questions">
+<h1>Frequently asked questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<p>Frequently asked questions and answers.</p>
+<div class="section" id="why-are-messages-not-tied-connected-to-a-specific-model">
+<h2>Why are messages not tied / connected to a specific model?<a class="headerlink" href="#why-are-messages-not-tied-connected-to-a-specific-model" title="Permalink to this headline">¶</a></h2>
+<p>Message templates are not tied to a specific model, because this allows you to have &#8220;common&#8221; templates which can be used for notifications on different models.</p>
+<p>Keep in mind thought, that in the template tags you are only allowed to use fields which are common to all the models which use that template.</p>
+<p>Lets say you have two models, one named <tt class="docutils literal"><span class="pre">Post</span></tt> (<tt class="docutils literal"><span class="pre">title</span></tt>, <tt class="docutils literal"><span class="pre">date_added</span></tt>, <tt class="docutils literal"><span class="pre">content</span></tt>, <tt class="docutils literal"><span class="pre">author</span></tt>) and other named <tt class="docutils literal"><span class="pre">Links</span></tt> (<tt class="docutils literal"><span class="pre">title</span></tt>, <tt class="docutils literal"><span class="pre">date_added</span></tt>, <tt class="docutils literal"><span class="pre">url</span></tt>, <tt class="docutils literal"><span class="pre">visits</span></tt>).</p>
+<p>In this case, your message template could only refer to the title (<tt class="docutils literal"><span class="pre">{{</span> <span class="pre">title</span> <span class="pre">}}</span></tt>) and the date_added (<tt class="docutils literal"><span class="pre">{{</span> <span class="pre">date_added</span> <span class="pre">}}</span></tt>) fields.</p>
+</div>
 </div>
 
 
@@ -65,15 +62,20 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Frequently asked questions</a><ul>
+<li><a class="reference external" href="#why-are-messages-not-tied-connected-to-a-specific-model">Why are messages not tied / connected to a specific model?</a></li>
+</ul>
+</li>
+</ul>
+
             <h4>Previous topic</h4>
-            <p class="topless"><a href="introduction.html"
-                                  title="previous chapter">Introduction</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="concepts_and_models.html"
-                                  title="next chapter">Concepts and models</a></p>
+            <p class="topless"><a href="available_notification_backends.html"
+                                  title="previous chapter">Available notification backends</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="sources/dependencies.txt"
+              <li><a href="sources/faq.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -103,10 +105,7 @@
           <a href="modindex.html" title="Global Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="concepts_and_models.html" title="Concepts and models"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="introduction.html" title="Introduction"
+          <a href="available_notification_backends.html" title="Available notification backends"
              >previous</a> |</li>
         <li><a href="index.html">Django notifications v0.2.dev documentation</a> &raquo;</li> 
       </ul>
