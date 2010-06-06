@@ -100,26 +100,20 @@ class SubscriptionMap(models.Model):
 
 # Signal callbacks
 def post_save_callback(sender, **kwargs):
+	dispatch_task(sender, 'create' if kwargs['created'] else 'edit', **kwargs)
+	
+def post_delete_callback(sender, **kwargs):
+	dispatch_task(sender, 'delete', **kwargs)
+	
+def dispatch_task(sender, type = 'save', **kwargs):
 	# Dispatches a task which checks if there are any active subscriptions for this event.
 	#
 	# Tasks are used, because signals in Django are synchronous (blocking) and if there were
 	# many subscribers for this event, this callback could slow things down considerably.
 	model = get_model_name(sender.__doc__)
 	instance = kwargs['instance']
-	created = kwargs['created']
 	
-	action = get_choice_id('create' if created else 'edit', MODEL_ACTIONS)
-	object_id = instance.id
-	field_values = get_field_values(instance)
-	
-	from tasks import CheckSubscriptionsTask
-	CheckSubscriptionsTask.delay(model, object_id, action, field_values)
-	
-def post_delete_callback(sender, **kwargs):
-	model = get_model_name(sender.__doc__)
-	instance = kwargs['instance']
-	
-	action = get_choice_id('delete', MODEL_ACTIONS)
+	action = get_choice_id(type, MODEL_ACTIONS)
 	object_id = instance.id
 	field_values = get_field_values(instance)
 	
