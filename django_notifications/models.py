@@ -135,7 +135,7 @@ def dispatch_task(sender, type = 'save', **kwargs):
 	instance = kwargs['instance']
 	
 	action = get_choice_id(type, MODEL_ACTIONS)
-	object_id = instance.id
+	object_id = instance.pk
 	field_values = get_field_values(instance)
 	
 	from tasks import CheckSubscriptionsTask
