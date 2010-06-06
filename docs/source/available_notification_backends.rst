@@ -104,5 +104,37 @@ For example::
 			'SENDER_EMAIL': 'name@domain.com',
 		},
 	}
+	
+twitter
+~~~~~~~
+
+This backends sends notifications to Twitter_.
+
+When you set a recipient in the admin panel, you can specify a Twitter account username (``@Username``) and the backend will send this user a `direct message`_.
+
+If anything else not starting with an at sign is specified, the ``recipient`` field is ignored and a normal `status update`_ is posted.
+
+**Dependencies**:
+
+- python-twitter library (http://code.google.com/p/python-twitter/)
+
+**Settings**:
+
+- ``USERNAME`` - your Twitter account username
+- ``PASSWORD`` - your Twitter account password
+
+For example::
+
+	NOTIFICATIONS = {
+			'twitter': {
+				'USERNAME': 'Tweetie',
+				'PASSWORD': 'somepassword1298',
+		},
+	}
+	
+*Note: If you want to send a direct message, the user which you want to send the message to must follow you and vice-versa.*
 
 .. _Mobitel.si: https://moj.mobitel.si/portal
+.. _Twitter: http://twitter.com/
+.. _direct message: http://help.twitter.com/forums/10711/entries/14606
+.. _status update: http://help.twitter.com/entries/15367-how-to-post-a-twitter-update-or-tweet

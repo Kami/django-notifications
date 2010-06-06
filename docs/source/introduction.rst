@@ -38,6 +38,7 @@ Currently this module supports the following notification backends / protocols:
 - XMPP - uses XMPP protocol for sending notifications (Google Talk, etc.)
 - SMS - uses `Mobitel.si` service to send SMS messages (only available to Mobitel.si subscribers in Slovenia)
 - Postmark Email - uses http://postmarkapp.com REST service to send email
+- Twitter - sends notifications to Twitter (as a direct message or a normal status update)
 
 For more information, visit the :doc:`available_notification_backends` page.
 
