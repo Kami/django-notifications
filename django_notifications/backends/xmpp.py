@@ -21,6 +21,7 @@ SETTINGS = {
 		'PASSWORD': '',
 		'SERVER': 'talk.google.com',
 		'PORT': 5222,
+		'TYPE': 'normal' # Your will most likely use "normal" or "chat" (http://www.apps.ietf.org/rfc/rfc3921.html)
 	},
 	
 	'optional': {
@@ -42,9 +43,9 @@ class XMPPBackend(BaseBackend):
 		if not client:
 			return None
 		
-		client.send(protocol.Message(recipient_jid, message))
+		client.send(protocol.Message(recipient_jid, message, self.settings['TYPE']))
 		
-		time.sleep(1)
+		time.sleep(2)
 		client.disconnect()
 		
 	def __authenticate_and_get_client(self):
