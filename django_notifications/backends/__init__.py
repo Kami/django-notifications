@@ -8,6 +8,7 @@ BACKEND_CLASSES = {
 	'xmpp': 'django_notifications.backends.xmpp.XMPPBackend',
 	'sms_mobitel': 'django_notifications.backends.sms_mobitel.SMSMobitelBackend',
 	'postmark': 'django_notifications.backends.postmark.PostmarkBackend',
+	'twitter': 'django_notifications.backends.twitter.TwitterBackend',
 }
 
 def get_available_backends(configured_only = False):
