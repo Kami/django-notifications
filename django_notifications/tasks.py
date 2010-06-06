@@ -8,6 +8,8 @@ from models import MODEL_ACTIONS, NOTIFICATION_TYPES
 from models import SubscriptionMap, Message
 from models import get_choice_id
 
+from match_filter import MatchFilter
+
 from backends import get_class_instance_by_key
 from django.db.models import Q
 
@@ -15,7 +17,7 @@ class NotificationTask(Task):
 	ignore_result = True
 	
 	def run(self, type, subscriber, message):
-		# Before disptaching the notification we check if this backend
+		# Before dispatching the notification we check if this backend
 		# is actually configured and available.
 		if not get_choice_id(type, NOTIFICATION_TYPES, reverse = True):
 			return
@@ -35,11 +37,21 @@ class CheckSubscriptionsTask(Task):
 		for subscription in subscriptions:
 			# Dispatch the notification tasks
 			model_object_id = subscription.subscription.model_object_id
+			match_filter = subscription.subscription.model_match_filter
 			
 			if model_object_id and (model_object_id != object_id):
 				# Subscribed for an event on a single object, but the
-				# object ID doesnt match.
+				# object ID doesn't match.
 				continue
+			
+			if match_filter:
+				# This subscription has a model match filter defined.
+				# Check if it matches
+				model_class = subscription.subscription.model_content_type.model_class()
+				filter = MatchFilter(match_filter, model_class)
+				
+				if not filter.matches(field_values):
+					continue
 			
 			type = subscription.type
 			subscriber = subscription.recipient

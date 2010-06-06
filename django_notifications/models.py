@@ -8,6 +8,7 @@ from django.contrib.contenttypes import generic
 from django.db.models.signals import post_save, post_delete
 
 from backends import get_available_backends
+from match_filter import MatchFilter
 
 # Constans
 MODEL_ACTIONS = (
@@ -57,6 +58,7 @@ class Subscription(models.Model):
 	model_content_type = models.ForeignKey(ContentType, verbose_name = 'model', \
 											db_index = True)
 	model_object_id = models.PositiveIntegerField(blank = True, null = True)
+	model_match_filter = models.CharField(max_length = 250, blank = True, null = True)
 	action = models.PositiveIntegerField(max_length = 1, choices = MODEL_ACTIONS,
 											db_index = True)
 	date_subscribed = models.DateTimeField(auto_now_add = True)
@@ -76,7 +78,26 @@ class Subscription(models.Model):
 			
 			if self.action == get_choice_id('create', MODEL_ACTIONS):
 				raise ValidationError('Model object ID must be empty when subscribing for a create event')
+
+		if self.model_match_filter:
+			# If the match filter is specified, check that it is valid
 			
+			if self.model_object_id and self.action == get_choice_id('delete', MODEL_ACTIONS):
+				raise ValidationError('Model match filter must be empty when subscribing for a delete event on a specific model object')
+			
+			try:
+				self.model_content_type
+			except ObjectDoesNotExist:
+				# No model selected yet
+				return
+
+			model_class = self.model_content_type.model_class()
+			filter = MatchFilter(self.model_match_filter, model_class)
+			
+			if not filter.is_valid():
+				raise ValidationError('Invalid model match filter. Valid fields for this model are: %s' %
+									 (', ' . join(filter.valid_fields)))
+		
 	def __unicode__(self):
 		return '%s' % (self.label)
 				
