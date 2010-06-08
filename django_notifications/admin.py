@@ -8,6 +8,7 @@ from models import Subscription, SubscriptionMap, \
 
 class SubscriptionMapInline(admin.StackedInline):
 	model = SubscriptionMap
+	max_num = 5
 	
 class SubscriptionAdmin(admin.ModelAdmin):
 	list_display = ('label', 'model_content_type', 'model_instance', 
