@@ -1,6 +1,7 @@
 from django.db import models
 
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.template import Template, TemplateSyntaxError
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
@@ -46,6 +47,13 @@ class Message(models.Model):
 	label = models.CharField(max_length = 150)
 	content = models.TextField(blank = False)
 	
+	def clean(self):
+		# Check that the template syntax is valid
+		try:
+			template = Template(self.content)
+		except TemplateSyntaxError:
+			raise ValidationError('The message template contains syntax errors')
+	
 	def __unicode__(self):
 		return '%s' % (self.label)
 	
@@ -65,8 +73,6 @@ class Subscription(models.Model):
 	active = models.BooleanField(default = True)
 	
 	def clean(self):
-		from django.core.exceptions import ValidationError
-		
 		if self.model_object_id:
 			# If the model object ID is specified, check that the instance with
 			# this ID actually exists.
