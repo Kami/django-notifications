@@ -55,9 +55,11 @@ This allows you to use the `Django template tags and filters`_ in the content fi
 
 For example, one of your message templates could look like this::
 
-  Profile of the user {{ user.username }} has been updated on {{ date_updated|date:"d.m.Y" }} (model {{ model }}, action {{ action }})
+  Profile of the user {{ user }} has been updated on {{ date_updated|date:"d.m.Y" }} (model {{ model }}, action {{ action }})
 
 In this case, the model which has triggered this event would need to have at least two fields - ``user`` and ``date_updated``.
+
+*Note: In the current version you can only use the "base" model variables, meaning you can't use any related objects variables or methods.*
 
 .. _concepts_and_models-match_filters:
 
