@@ -9,6 +9,7 @@ BACKEND_CLASSES = {
 	'sms_mobitel': 'django_notifications.backends.sms_mobitel.SMSMobitelBackend',
 	'postmark': 'django_notifications.backends.postmark.PostmarkBackend',
 	'twitter': 'django_notifications.backends.twitter.TwitterBackend',
+	'web_hook': 'django_notifications.backends.web_hook.WebHookBackend',
 }
 
 def get_available_backends(configured_only = False):
