@@ -13,6 +13,7 @@ SETTINGS = {
 		'NAME': 'Mobitel.si SMS backend',
 		'DESCRIPTION': 'Backends which sends SMS notifications using mobitel.si SOAP API',
 		'WS_URL': 'https://moj.mobitel.si/mobidesktop-v1/wsdl.xml',
+		'MESSAGE_REQUIRED': True,
 	},
 	
 	'required': {

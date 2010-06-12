@@ -55,14 +55,18 @@ class CheckSubscriptionsTask(Task):
 			
 			type = subscription.type
 			subscriber = subscription.recipient
-			message = subscription.message.content
-			template = Template(message)
-			
 			field_values.update({'model': model,
 								'action': get_choice_id(action, MODEL_ACTIONS, \
 														 reverse = True)})
-			context = Context(field_values)
-			message_rendered = template.render(context)
+			
+			if subscription.message:
+				message = subscription.message.content
+				template = Template(message)
+
+				context = Context(field_values)
+				message_rendered = template.render(context)
+			else:
+				message_rendered = field_values
 			
 			NotificationTask.delay(type, subscriber, message_rendered)
 			

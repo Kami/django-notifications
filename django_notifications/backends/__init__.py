@@ -13,12 +13,12 @@ BACKEND_CLASSES = {
 
 def get_available_backends(configured_only = False):
 	"""
-	Returns a list of all the available backends.
+	Returns a dictionary of all the available backends.
 	
 	If configured_only = True only those backends which are
 	properly configured are returned.
 	"""
-	available_backends = []
+	available_backends = {}
 	for key in BACKEND_CLASSES.keys():
 		module_name = get_module_and_class_name(BACKEND_CLASSES[key])[0]
 		class_instance = get_class_instance_by_key(key)
@@ -35,11 +35,10 @@ def get_available_backends(configured_only = False):
 		if not meta or (configured_only and not is_configured) \
 					or (configured_only and not_available):
 			continue
-			
-		name = meta['NAME']
-		description = meta['DESCRIPTION']
 
-		available_backends.append((key, name, description))
+		values = {key: dict([(k.lower(), v) for k, v in \
+						meta.iteritems()])}
+		available_backends.update(values)
 			
 	return available_backends
 

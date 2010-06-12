@@ -12,6 +12,7 @@ SETTINGS = {
 	'meta': {
 		'NAME': 'Postmark Email backend',
 		'DESCRIPTION': 'Backend which is using postmarkapp.com service to send emai notifications',
+		'MESSAGE_REQUIRED': True,
 	},
 	
 	'required': {

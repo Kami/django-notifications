@@ -12,6 +12,7 @@ SETTINGS = {
 	'meta': {
 		'NAME': 'Twitter Backend',
 		'DESCRIPTION': 'Backend which sends notifications to Twitter',
+		'MESSAGE_REQUIRED': True,
 	},
 	
 	'required': {

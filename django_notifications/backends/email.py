@@ -9,6 +9,7 @@ SETTINGS = {
 	'meta': {
 		'NAME': 'Email backend',
 		'DESCRIPTION': 'Backend which sends email notifications',
+		'MESSAGE_REQUIRED': True,
 	},
 	
 	'required': {

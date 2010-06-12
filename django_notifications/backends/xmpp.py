@@ -14,6 +14,7 @@ SETTINGS = {
 	'meta': {
 		'NAME': 'XMPP Backend',
 		'DESCRIPTION': 'Backend which sends notifications using XMPP (Jabber) protocol',
+		'MESSAGE_REQUIRED': True,
 	},
 	
 	'required': {

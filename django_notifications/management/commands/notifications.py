@@ -56,8 +56,9 @@ class Command(BaseCommand):
 			available_backends = backends.get_available_backends()
 
 			print style.GREEN('Available backends:')
-			for (key, value, description) in available_backends:
-				print '- ', style.BOLD('%s' % (key)), '- %s (%s)' % (value, description)
+			for (key, value) in available_backends.iteritems():
+				print '- ', style.BOLD('%s' % (key)), '- %s (%s)' % \
+							(value['name'], value['description'])
 		except KeyboardInterrupt:
 			pass
 				
@@ -66,8 +67,9 @@ class Command(BaseCommand):
 			configured_backends = backends.get_available_backends(configured_only = True)
 			
 			print style.GREEN('Available and configured backends:')
-			for (key, value, description) in configured_backends:
-				print '- ', style.BOLD('%s' % (key)), '- %s (%s)' % (value, description)
+			for (key, value) in configured_backends.iteritems():
+				print '- ', style.BOLD('%s' % (key)), '- %s (%s)' % \
+							(value['name'], value['description'])
 		except KeyboardInterrupt:
 			pass
 		
