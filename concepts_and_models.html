@@ -93,9 +93,10 @@
 <p>When rendered, each message template is automatically provided with the name of the action and the model which has triggered the event, and also all the model instance field values.</p>
 <p>This allows you to use the <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/templates/builtins/">Django template tags and filters</a> in the content field of the message templates.</p>
 <p>For example, one of your message templates could look like this:</p>
-<div class="highlight-python"><pre>Profile of the user {{ user.username }} has been updated on {{ date_updated|date:"d.m.Y" }} (model {{ model }}, action {{ action }})</pre>
+<div class="highlight-python"><pre>Profile of the user {{ user }} has been updated on {{ date_updated|date:"d.m.Y" }} (model {{ model }}, action {{ action }})</pre>
 </div>
 <p>In this case, the model which has triggered this event would need to have at least two fields - <tt class="docutils literal"><span class="pre">user</span></tt> and <tt class="docutils literal"><span class="pre">date_updated</span></tt>.</p>
+<p><em>Note: In the current version you can only use the &#8220;base&#8221; model variables, meaning you can&#8217;t use any related objects variables or methods.</em></p>
 </div>
 </div>
 <div class="section" id="model-match-filters">
