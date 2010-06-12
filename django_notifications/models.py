@@ -9,9 +9,12 @@ from django.contrib.contenttypes import generic
 from django.db.models.signals import post_save, post_delete
 
 from backends import get_available_backends
+from utils import get_template_variables_list, get_model_field_names
 from match_filter import MatchFilter
 
 # Constans
+ENABLE_MESSAGE_VALIDATION = True
+
 MODEL_ACTIONS = (
 	(0, 'create'),
 	(1, 'edit'),
@@ -121,6 +124,26 @@ class SubscriptionMap(models.Model):
 		verbose_name 		= 'Notification'
 		verbose_name_plural = 'Notifications'
 		
+	def clean(self):
+		# Check that the selected message template is valid for the selected model
+		# (it does not contain any reference to a field which is not available in the
+		# selected model).
+		if not ENABLE_MESSAGE_VALIDATION:
+			return
+		
+		template_variables = get_template_variables_list(self.message.content)
+
+		if template_variables:
+			template_variables = set(template_variables)
+			model_variables = get_model_field_names(self.subscription.model_content_type \
+												.model_class(), False)
+			model_variables.extend(['model', 'action'])
+			model_variables = set(model_variables)
+
+			if not template_variables.issubset(model_variables):
+				raise ValidationError('Message template contains variables which are not available for the selected model (%s). Valid variables are: %s'
+									% (self.subscription.model_content_type, ', ' . join(model_variables)))
+		
 	def __unicode__(self):
 		return '%s - %s (%s)' % (self.subscription, self.type, \
 								'enabled' if self.active else 'disabled')
@@ -143,7 +166,7 @@ def dispatch_task(sender, type = 'save', **kwargs):
 	action = get_choice_id(type, MODEL_ACTIONS)
 	object_id = instance.pk
 	field_values = get_field_values(instance)
-	
+
 	from tasks import CheckSubscriptionsTask
 	CheckSubscriptionsTask.delay(model, object_id, action, field_values)
 	
